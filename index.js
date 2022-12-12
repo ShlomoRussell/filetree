@@ -22,6 +22,7 @@ function createForm(id, type) {
       addFolder(this[0].dataset.id, this[0].value);
     }
     this.reset();
+    form[0].blur();
   });
   form[0].addEventListener("blur", (e) => form.remove());
 }
@@ -30,7 +31,10 @@ files.addEventListener("contextmenu", function (e) {
   e.preventDefault();
   const { clientX, clientY } = e;
 
-  if (e.target.className === "folder") {
+  if (
+    e.target.className === "folder" ||
+    e.target.className === "open-folder"
+  ) {
     folderContextMenu(e.target.id, clientX, clientY);
   }
   if (e.target.className === "file") {
@@ -97,10 +101,9 @@ function removeContextMenu() {
 function addFolder(id, folderName) {
   const li = document.createElement("li");
   li.innerText = folderName;
-  li.className = "folder";
+  li.className = "open-folder";
   li.id = "folder" + crypto.randomUUID();
   const ul = document.createElement("ul");
-  ul.addEventListener("click", collapseFolder);
   li.append(ul);
   document.querySelector(`#${id} ul`).append(li);
 }
@@ -122,11 +125,17 @@ document
   .addEventListener("click", collapseFolder);
 
 function collapseFolder(e) {
-  if (!e.target.id) {
+  const id = e.target.id;
+  const currentFolder = document.getElementById(id);
+  if (!id) {
     return;
   }
-  const target = document.querySelector(`#${e.target.id} ul`);
-  if (target.innerHTML && target.style.display !== "none") {
+  const target = document.querySelector(`#${id} ul`);
+  if (target.style.display !== "none") {
     target.style.display = "none";
-  } else target.style.display = "block";
+    currentFolder.className = "folder";
+  } else {
+    target.style.display = "block";
+    currentFolder.className = "open-folder";
+  }
 }

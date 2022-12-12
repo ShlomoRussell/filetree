@@ -32,9 +32,14 @@ body {
   border: 1px black solid;
 }
 
-.folder {
-  list-style-image: url("folder.svg");
-}
 .file {
   list-style-image: url("file-earmark.svg");
+}
+
+.open-folder {
+  list-style-image: url("open-folder.svg");
+}
+
+.folder {
+  list-style-image: url("folder.svg");
 }
