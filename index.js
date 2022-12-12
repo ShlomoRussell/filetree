@@ -29,7 +29,7 @@ files.addEventListener("contextmenu", function (e) {
   if (e.target.className === "folder") {
     folderContextMenu(e.target.id, clientX, clientY);
   }
-  if (e.target.parentElement.className === "file") {
+  if (e.target.className === "file") {
     fileContextMenu(e.target.id, clientX, clientY);
   }
 });
@@ -85,11 +85,7 @@ document.querySelector("body").addEventListener("click", hideContextMenu);
 document.querySelector("body").addEventListener("contextmenu", hideContextMenu);
 
 function hideContextMenu(e) {
-  if (
-    e.target.offsetParent != contextMenu &&
-    e.target.parentElement.className !== "file" &&
-    e.target.className !== "folder"
-  ) {
+  if (e.target.className !== "file" && e.target.className !== "folder") {
     while (contextMenu.firstChild) {
       contextMenu.removeChild(contextMenu.lastChild);
     }
@@ -99,24 +95,32 @@ function hideContextMenu(e) {
 
 function addFolder(id, folderName) {
   const li = document.createElement("li");
-  const randomId = crypto.randomUUID();
   li.innerText = folderName;
   li.className = "folder";
-  li.id = randomId;
-  document.getElementById(id).append(li);
+  li.id = "folder" + crypto.randomUUID();
+  const ul = document.createElement("ul");
+  ul.addEventListener("click", collapseFolder);
+  li.append(ul);
+  document.querySelector(`#${id} ul`).append(li);
 }
 
 function addFile(id, filename) {
-  const ul = document.createElement("ul");
-  ul.className = "file";
   const li = document.createElement("li");
-  const randomId = crypto.randomUUID();
+  li.className = "file";
   li.innerText = filename;
-  li.id = randomId;
-  ul.append(li);
-  document.getElementById(id).append(ul);
+  li.id = "file" + crypto.randomUUID();
+  document.querySelector(`#${id} ul`).append(li);
 }
 
 function deleteEntry(id) {
   document.getElementById(id).remove();
+}
+
+document.querySelector(".folder").addEventListener("click", collapseFolder);
+
+function collapseFolder(e) {
+  const target = document.querySelector(`#${e.target.id} ul`);
+  if (target && target.style.display !== "none") {
+    target.style.display = "none";
+  } else target.style.display = "block";
 }

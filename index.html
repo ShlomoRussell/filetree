@@ -11,19 +11,19 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="styles.css" />
-    <title>Document</title>
+    <title>filetree</title>
   </head>
   <body>
-    <p>right click on a file or folder to add a or remove</p>
+    <p>right click on a file or folder to add or remove</p>
     <div class="container">
       <div class="row">
         <div id="root-folder-container" class="col">
-          <ul>
-            <li id="root-folder" class="folder">root</li>
+          <ul id="root-folder" class="folder">root
+           <ul class="folder"></ul>
           </ul>
         </div>
 
-        <div class="col-9">
+        <div class="col">
           <form>
             <input type="text" name="name" />
             <button>Create</button>

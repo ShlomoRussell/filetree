@@ -1,3 +1,7 @@
+:root{
+    --img:'folder.svg'
+}
+
 html,
 body {
   width: 100%;
@@ -29,4 +33,11 @@ form {
 }
 #context-menu .item:hover {
   background: #343434;
+}
+
+.folder{
+    list-style-image: url("folder.svg");
+}
+.file{
+    list-style-image: url('file-earmark.svg');
 }
