@@ -1,16 +1,9 @@
-:root{
-    --img:'folder.svg'
-}
-
 html,
 body {
   width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
-}
-form {
-  visibility: hidden;
 }
 
 #context-menu {
@@ -35,9 +28,13 @@ form {
   background: #343434;
 }
 
-.folder{
-    list-style-image: url("folder.svg");
+#root-folder-container.col {
+  border: 1px black solid;
 }
-.file{
-    list-style-image: url('file-earmark.svg');
+
+.folder {
+  list-style-image: url("folder.svg");
+}
+.file {
+  list-style-image: url("file-earmark.svg");
 }
