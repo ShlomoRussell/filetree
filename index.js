@@ -12,13 +12,16 @@ function createForm(id, type) {
   form[0].focus();
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+
+    if (!this[0].value) {
+      return form[0].blur();
+    }
     if (type === "file") {
       addFile(this[0].dataset.id, this[0].value);
     } else if (type === "folder") {
       addFolder(this[0].dataset.id, this[0].value);
     }
-    form.reset();
-    form.remove();
+    this.reset();
   });
   form[0].addEventListener("blur", (e) => form.remove());
 }
