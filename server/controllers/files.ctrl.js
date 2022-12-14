@@ -1,9 +1,7 @@
-import { Router } from "express";
+import express, { Router } from "express";
 import fs from "fs";
 import { join } from "path";
 const filesRouter = Router();
-
-
 
 filesRouter.post("/", (req, res) => {
   try {
@@ -46,11 +44,9 @@ filesRouter.delete("/", (req, res) => {
     fs.unlinkSync(join(process.cwd(), "files", req.body.path));
     res.send();
   } catch (error) {
-      console.log(error)
+    console.log(error);
     res.sendStatus(500);
   }
 });
-
-
 
 export default filesRouter;
