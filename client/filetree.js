@@ -3,6 +3,11 @@ const rootFolder = document.getElementById("root-folder");
 const contextMenu = document.createElement("div");
 contextMenu.id = "context-menu";
 
+/**
+ *
+ * @param {string} id
+ * @param {'file' | 'folder'} type
+ */
 function createForm(id, type) {
   const form = document.createElement("form");
   const input = document.createElement("input");
@@ -46,6 +51,12 @@ files.addEventListener("contextmenu", function (e) {
 });
 
 //creating custom context menus for right clicking the files and folders
+/**
+ *
+ * @param {string} id
+ * @param {number} x
+ * @param {number} y
+ */
 function folderContextMenu(id, x, y) {
   removeContextMenu();
 
@@ -73,6 +84,12 @@ function folderContextMenu(id, x, y) {
   document.querySelector("body").append(contextMenu);
 }
 
+/**
+ *
+ * @param {string} id
+ * @param {number} x
+ * @param {number} y
+ */
 function fileContextMenu(id, x, y) {
   removeContextMenu();
   contextMenu.style.top = `${y}px`;
@@ -88,6 +105,10 @@ function fileContextMenu(id, x, y) {
 //hiding the custom context menus or input on clicking somewhere else
 document.querySelector("body").addEventListener("click", hideContextMenu);
 
+/**
+ *
+ * @param {MouseEvent} e
+ */
 function hideContextMenu(e) {
   if (e.target.id !== "context-menu") {
     removeContextMenu();
@@ -99,6 +120,12 @@ function removeContextMenu() {
   contextMenu.remove();
 }
 
+/**
+ *
+ * @param {string | undefined} id
+ * @param {string} folderName
+ * @returns {Promise.<string>}
+ */
 async function addFolder(id = "root-folder", folderName) {
   try {
     const currentFolder = document.querySelector(`#${id}`);
@@ -121,6 +148,12 @@ async function addFolder(id = "root-folder", folderName) {
   }
 }
 
+/**
+ *
+ * @param {string | undefined} id
+ * @param {string} filename
+ * @returns {Promise<string>}
+ */
 async function addFile(id = "root-folder", filename) {
   try {
     const currentFolder = document.querySelector(`#${id}`);
@@ -140,12 +173,15 @@ async function addFile(id = "root-folder", filename) {
   }
 }
 
-function deleteEntry(id, path) {
+/**
+ * 
+ * @param {string} id 
+ */
+function deleteEntry(id) {
   const entry = document.getElementById(id);
   if (entry.className === "file") {
     deleteFileFromServer(entry.dataset.path);
-  }
-  else {
+  } else {
     deleteFolderFromServer(entry.dataset.path);
   }
   entry.remove();
@@ -153,6 +189,11 @@ function deleteEntry(id, path) {
 
 rootFolder.addEventListener("click", collapseFolder);
 
+/**
+ * 
+ * @param {MouseEvent} e 
+ * @returns 
+ */
 function collapseFolder(e) {
   const id = e.target.id;
   if (!id) {

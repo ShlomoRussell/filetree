@@ -1,5 +1,9 @@
 const textEditor = document.createElement("pre");
 
+/**
+ *
+ * @param {string} filePath
+ */
 async function insertFiletoEditor(filePath) {
   try {
     const editorContainer = document.getElementById("text-editor-container");
