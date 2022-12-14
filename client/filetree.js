@@ -102,17 +102,26 @@ function fileContextMenu(id, x, y) {
   document.querySelector("body").append(contextMenu);
 }
 
-//hiding the custom context menus or input on clicking somewhere else
-document.querySelector("body").addEventListener("click", hideContextMenu);
+//hiding the custom context menus on somewhere else and inserting files to the editor
+document.querySelector("body").addEventListener("click", handleBodyClick);
 
 /**
  *
  * @param {MouseEvent} e
  */
-function hideContextMenu(e) {
-  if (e.target.id !== "context-menu") {
+function handleBodyClick(e) {
+  const id = e.target.id;
+  if (id !== "context-menu" && contextMenu.childElementCount) {
     removeContextMenu();
+  } else if (!id) {
+    return;
+  } else if (e.target.className === "file") {
+    const path = e.path[2].dataset.path
+      ? `${e.path[2].dataset.path}/${e.target.innerText}`
+      : e.target.innerText;
+    return insertFiletoEditor(path);
   }
+  collapseFolder(id);
 }
 
 function removeContextMenu() {
@@ -174,8 +183,8 @@ async function addFile(id = "root-folder", filename) {
 }
 
 /**
- * 
- * @param {string} id 
+ *
+ * @param {string} id
  */
 function deleteEntry(id) {
   const entry = document.getElementById(id);
@@ -187,27 +196,15 @@ function deleteEntry(id) {
   entry.remove();
 }
 
-rootFolder.addEventListener("click", collapseFolder);
-
 /**
- * 
- * @param {MouseEvent} e 
- * @returns 
+ *
+ * @param {string} id
  */
-function collapseFolder(e) {
-  const id = e.target.id;
-  if (!id) {
-    return;
-  }
+function collapseFolder(id) {
   const currentFolder = document.getElementById(id);
   const target = document.querySelector(`#${id} ul`);
-  if (e.target.className === "file") {
-    const path = e.path[2].dataset.path
-      ? `${e.path[2].dataset.path}/${e.target.innerText}`
-      : e.target.innerText;
-    return insertFiletoEditor(path);
-  }
-  if (target.style && target.style.display !== "none") {
+
+  if (target.style.display !== "none") {
     target.style.display = "none";
     currentFolder.className = "folder";
   } else {
