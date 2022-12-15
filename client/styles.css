@@ -29,22 +29,55 @@ body {
   background: #343434;
 }
 
-#root-folder-container.col {
+#root-folder-container.col,
+.terminal {
   border: 1px black solid;
 }
 
 .file {
-  list-style-image: url("file-earmark.svg");
+  list-style-image: url("icons/file-earmark.svg");
 }
 
 .open-folder {
-  list-style-image: url("open-folder.svg");
+  list-style-image: url("icons/open-folder.svg");
 }
 
 .folder {
-  list-style-image: url("folder.svg");
+  list-style-image: url("icons/folder.svg");
 }
 
 pre {
-  border: solid black 1px;
+  tab-size: 4;
+  counter-reset: linecounter;
+  padding: 0;
+  color: #eee;
+  background-color: #333;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(245, 245, 220, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(245, 245, 220, 0.3);
+}
+pre div {
+  counter-increment: linecounter;
+}
+
+pre div::before {
+  content: counter(linecounter);
+  color: #6a8585;
+  display: inline-block;
+  padding-right: 3px;
+  text-align: right;
+}
+
+ul {
+  cursor: pointer;
+}
+
+li span:hover {
+  background-color: grey;
 }
