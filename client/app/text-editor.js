@@ -1,7 +1,5 @@
 const editorContainer = document.getElementById("text-editor-container");
 const textEditor = document.createElement("pre");
-textEditor.style.background = "black";
-textEditor.style.color = "white";
 textEditor.contentEditable = true;
 textEditor.className = "h-50";
 const editorHeader = document.createElement("div");
@@ -15,7 +13,7 @@ const saveBtn = document.createElement("button");
 saveBtn.className = "btn btn-primary";
 saveBtn.addEventListener("click", saveFileContents, { capture: true });
 saveBtn.innerText = "Save";
-editorHeader.append(p, saveBtn, runBtn);
+editorHeader.append(runBtn, p, saveBtn);
 
 /**
  *
@@ -34,10 +32,17 @@ async function insertFiletoEditor(filePath) {
       clearElementsChildren(textEditor);
     }
     p.innerText = filename;
-    const fileContents = await getFileContents(filePath).then(
-      async (res) => await res.text()
-    );
-    textEditor.append(fileContents);
+    const fileContents = await getFileContents(filePath).then(async (res) => {
+      const string = await res.text();
+      const lines = string.split("\n");
+      lines.forEach((line) => {
+        const div = document.createElement('div');
+        div.innerText = line;
+        textEditor.append(div);
+      });
+      return string;
+    });
+
     textEditor.dataset.path = filePath;
     editorContainer.append(editorHeader, textEditor);
     openTerminal(filename, fileContents);
@@ -82,13 +87,18 @@ function runTerminal() {
     terminal.srcdoc = textEditor.innerText;
   }
 }
+
 async function saveFileContents() {
   try {
     await addFileContents(
       textEditor.dataset.path,
-      textEditor.innerHTML.replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+      textEditor.innerText.replace(/&lt;/g, "<").replace(/&gt;/g, ">")
     );
   } catch (error) {
     console.log(error);
   }
 }
+
+textEditor.addEventListener('keyup', function (e) {
+ 
+})

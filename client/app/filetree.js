@@ -119,9 +119,8 @@ function handleBodyClick(e) {
     const path = e.path[2].dataset.path
       ? `${e.path[2].dataset.path}/${e.target.innerText}`
       : e.target.innerText;
-    return insertFiletoEditor(path);
-  }
-  collapseFolder(id);
+    insertFiletoEditor(path);
+  } else collapseFolder(id);
 }
 
 function removeContextMenu() {
@@ -144,10 +143,12 @@ async function addFolder(id = "root-folder", folderName) {
         : `${currentFolder.dataset.path}/${folderName}`;
 
     const li = document.createElement("li");
-    li.innerText = folderName;
     li.className = "open-folder";
     li.dataset.path = path;
     li.id = "folder" + crypto.randomUUID();
+    const span = document.createElement("span");
+    span.innerText = folderName;
+    li.append(span);
     const ul = document.createElement("ul");
     li.append(ul);
     currentFolder.querySelector("ul").append(li);
@@ -172,9 +173,11 @@ async function addFile(id = "root-folder", filename) {
         : `${currentFolder.dataset.path}/${filename}`;
     const li = document.createElement("li");
     li.className = "file";
-    li.innerText = filename;
     li.id = "file" + crypto.randomUUID();
     li.dataset.path = path;
+    const span = document.createElement("span");
+    span.innerText = filename;
+    li.append(span);
     currentFolder.querySelector("ul").append(li);
     return path;
   } catch (error) {
@@ -201,13 +204,15 @@ function deleteEntry(id) {
  * @param {string} id
  */
 function collapseFolder(id) {
+  if (id === "root-folder-container") {
+    return;
+  }
   const currentFolder = document.getElementById(id);
   const target = document.querySelector(`#${id} ul`);
-
-  if (target.style.display !== "none") {
+  if (target && target.style.display !== "none") {
     target.style.display = "none";
     currentFolder.className = "folder";
-  } else {
+  } else if (target) {
     target.style.display = "block";
     currentFolder.className = "open-folder";
   }
