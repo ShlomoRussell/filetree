@@ -1,5 +1,14 @@
+import {
+  addFileToServer,
+  addFolderToServer,
+  deleteFileFromServer,
+  deleteFolderFromServer,
+  getDirectoryList,
+} from "./fetch.js";
+import { insertFiletoEditor } from "./text-editor.js";
+import { clearElementsChildren } from "./util.js";
+
 const files = document.getElementById("root-folder-container");
-const rootFolder = document.getElementById("root-folder");
 const contextMenu = document.createElement("div");
 contextMenu.id = "context-menu";
 

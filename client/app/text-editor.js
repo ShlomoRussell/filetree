@@ -1,3 +1,6 @@
+import { addFileContents, getFileContents } from "./fetch.js";
+import { clearElementsChildren } from "./util.js";
+
 const editorContainer = document.getElementById("text-editor-container");
 const textEditor = document.createElement("pre");
 textEditor.contentEditable = true;
@@ -19,7 +22,7 @@ editorHeader.append(runBtn, p, saveBtn);
  *
  * @param {string} filePath
  */
-async function insertFiletoEditor(filePath) {
+export async function insertFiletoEditor(filePath) {
   const filename = filePath.includes("/")
     ? filePath.split("/").slice(-1).join()
     : filePath;
@@ -36,7 +39,7 @@ async function insertFiletoEditor(filePath) {
       const string = await res.text();
       const lines = string.split("\n");
       lines.forEach((line) => {
-        const div = document.createElement('div');
+        const div = document.createElement("div");
         div.innerText = line;
         textEditor.append(div);
       });
@@ -99,6 +102,4 @@ async function saveFileContents() {
   }
 }
 
-textEditor.addEventListener('keyup', function (e) {
- 
-})
+textEditor.addEventListener("keyup", function (e) {});

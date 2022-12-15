@@ -24,8 +24,18 @@
           class="col-3 h-100"
           style="max-width: 25%"
         >
-          <ul id="root-folder" class="folder">
-            root
+          <ul id="root-folder">
+            <button class="btn btn-light">
+              <img
+                src="icons/add-file.svg"
+                alt="add file"
+              
+              />
+            </button>
+            <button class="btn btn-light">
+              <img src="icons/add-folder.svg" alt="add file" />
+            </button>
+
             <ul class="folder"></ul>
           </ul>
         </div>
@@ -33,9 +43,9 @@
         <div class="col h-100 mb-3" id="text-editor-container"></div>
       </div>
     </div>
-    <script src="util.js"></script>
-    <script src="fetch.js"></script>
-    <script src="filetree.js"></script>
-    <script src="text-editor.js"></script>
+    <script type="module" src="app/util.js"></script>
+    <script type="module" src="app/fetch.js"></script>
+    <script type="module" src="app/filetree.js"></script>
+    <script type="module" src="app/text-editor.js"></script>
   </body>
 </html>

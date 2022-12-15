@@ -6,7 +6,7 @@ const baseUrl = "http://localhost:3001";
  * @returns
  */
 
-function addFolderToServer(folderPath) {
+export function addFolderToServer(folderPath) {
   return fetch("http://localhost:3001/folder/", {
     method: "POST",
     body: JSON.stringify({ folderPath }),
@@ -21,7 +21,7 @@ function addFolderToServer(folderPath) {
  * @param {string} filePath
  * @returns
  */
-function addFileToServer(filePath) {
+export function addFileToServer(filePath) {
   return fetch(`${baseUrl}/file`, {
     method: "POST",
     body: JSON.stringify({ filePath }),
@@ -36,7 +36,7 @@ function addFileToServer(filePath) {
  * @param {string} filePath
  * @returns
  */
-function getFileContents(filePath) {
+export function getFileContents(filePath) {
   return fetch(`${baseUrl}/file`, {
     headers: { filePath: filePath },
   });
@@ -48,7 +48,7 @@ function getFileContents(filePath) {
  * @param {string} fileContents
  * @returns
  */
-function addFileContents(filePath, fileContents) {
+export function addFileContents(filePath, fileContents) {
   return fetch(`${baseUrl}/file/save`, {
     method: "POST",
     body: JSON.stringify({ filePath, fileContents }),
@@ -58,7 +58,7 @@ function addFileContents(filePath, fileContents) {
   });
 }
 
-function getDirectoryList() {
+export function getDirectoryList() {
   return fetch(`${baseUrl}/folder/directoryList`);
 }
 
@@ -67,7 +67,7 @@ function getDirectoryList() {
  * @param {string} path
  * @returns
  */
-function deleteFileFromServer(path) {
+export function deleteFileFromServer(path) {
   return fetch(`${baseUrl}/file`, {
     method: "DELETE",
     body: JSON.stringify({ path }),
@@ -78,11 +78,11 @@ function deleteFileFromServer(path) {
 }
 
 /**
- * 
- * @param {string} path 
- * @returns 
+ *
+ * @param {string} path
+ * @returns
  */
-function deleteFolderFromServer(path) {
+export function deleteFolderFromServer(path) {
   return fetch(`${baseUrl}/folder`, {
     method: "DELETE",
     body: JSON.stringify({ path }),
