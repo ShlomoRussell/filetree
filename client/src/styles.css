@@ -5,6 +5,7 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 #context-menu {
@@ -29,11 +30,36 @@ body {
   background: #343434;
 }
 
-#root-folder-container.col,
 .terminal {
   border: 1px black solid;
 }
 
+#root-folder-container,
+input {
+  background-color: #252526;
+  color: white;
+}
+
+ul {
+  cursor: pointer;
+  padding-left: 0.6rem;
+}
+
+ul span {
+  padding: 2px 5px;
+}
+ul span:hover {
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+ul span.active {
+  background-color: rgba(128, 128, 128, 0.2);
+}
+
+input {
+  outline: solid #007fd4 1px;
+  border-radius: 5px;
+}
 .file {
   list-style-image: url("icons/file-earmark.svg");
 }
@@ -44,6 +70,14 @@ body {
 
 .folder {
   list-style-image: url("icons/folder.svg");
+}
+
+#text-editor-container {
+  height: 91.3%;
+}
+
+p {
+  color: white;
 }
 
 pre {
@@ -74,10 +108,6 @@ pre div::before {
   text-align: right;
 }
 
-ul {
-  cursor: pointer;
-}
-
-li span:hover {
-  background-color: grey;
+.terminal {
+  background-color: white;
 }
