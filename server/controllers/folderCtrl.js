@@ -1,14 +1,14 @@
 import { Router } from "express";
 import fs from "fs";
 import { join } from "path";
-
+import { formatDirectories, getDirectoryList } from "../bl/folder.bl.js";
 const folderRouter = Router();
 
-folderRouter.post("/", (req, res) => {
+folderRouter.post("/", async (req, res) => {
   try {
     const path = join(process.cwd(), "files", req.body.folderPath);
     if (!fs.existsSync(path)) {
-      fs.mkdirSync(path);
+      await fs.promises.mkdir(path);
     }
     res.send();
   } catch (error) {
@@ -16,33 +16,17 @@ folderRouter.post("/", (req, res) => {
   }
 });
 
-folderRouter.get("/directoryList", (req, res) => {
+folderRouter.get("/directoryList", async (req, res) => {
   try {
-    const directoryList = formatDirectories(getDirectoryList("files"), "files");
-    res.send(directoryList);
+    const directoryList = await getDirectoryList("files");
+    const formattedDirectories = await formatDirectories(
+      directoryList,
+      "files"
+    );
+    res.send(formattedDirectories);
   } catch (error) {
+    console.log("line 26: ", error);
     res.sendStatus(500);
-  }
-
-  function getDirectoryList(dir) {
-    return fs.readdirSync(join(process.cwd(), dir), { withFileTypes: true });
-  }
-
-  function formatDirectories(directoryList, currentDir) {
-    return directoryList.reduce((org, dir) => {
-      const directory = join(currentDir, dir.name);
-      if (dir.isDirectory())
-        return [
-          ...org,
-          {
-            [dir.name]: formatDirectories(
-              getDirectoryList(directory),
-              directory
-            ),
-          },
-        ];
-      else return [...org, dir.name];
-    }, []);
   }
 });
 
