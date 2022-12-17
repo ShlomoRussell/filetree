@@ -1,47 +1,56 @@
-import express, { Router } from "express";
+import { Router } from "express";
 import fs from "fs";
 import { join } from "path";
 const filesRouter = Router();
 
-filesRouter.post("/", (req, res) => {
+filesRouter.post("/", async (req, res) => {
+  const path = join(process.cwd(), "files", req.body.filePath);
   try {
-    fs.closeSync(
-      fs.openSync(join(process.cwd(), "files", req.body.filePath), "a")
-    );
+    const file = await fs.promises.open(path, "a");
+    await file.close()
     res.send();
   } catch (error) {
     console.log(error);
   }
 });
 
-filesRouter.post("/save", (req, res) => {
+filesRouter.post("/save", async (req, res) => {
+  const path = join(process.cwd(), "files", req.body.filePath);
   try {
-    fs.writeFileSync(
-      join(process.cwd(), "files", req.body.filePath),
-      req.body.fileContents,
-      "utf-8"
-    );
+    await fs.promises.writeFile(path, req.body.fileContents, "utf-8");
     res.send();
   } catch (error) {
     console.log(error);
   }
 });
 
-filesRouter.get("/", (req, res) => {
+filesRouter.get("/", async (req, res) => {
+  const path = join(process.cwd(), "files", req.headers.filepath);
   try {
-    const fileContents = fs.readFileSync(
-      join(process.cwd(), "files", req.headers.filepath),
-      "utf-8"
-    );
+    const fileContents = await fs.promises.readFile(path, "utf-8");
     res.send(fileContents);
   } catch (error) {
+    console.log(error);
     res.sendStatus(500);
   }
 });
 
-filesRouter.delete("/", (req, res) => {
+filesRouter.delete("/", async (req, res) => {
+  const path = join(process.cwd(), "files", req.body.path);
   try {
-    fs.unlinkSync(join(process.cwd(), "files", req.body.path));
+    await fs.promises.unlink(path);
+    res.send();
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+filesRouter.put("/", async (req, res) => {
+  const oldPath = join(process.cwd(), "files", req.body.oldPath);
+  const newPath = join(process.cwd(), "files", req.body.newPath);
+  try {
+    await fs.promises.rename(oldPath, newPath);
     res.send();
   } catch (error) {
     console.log(error);
