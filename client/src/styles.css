@@ -1,5 +1,6 @@
 html,
-body {
+body,
+#root {
   width: 100%;
   height: 100%;
   padding: 0;
@@ -40,6 +41,18 @@ input {
   color: white;
 }
 
+#add-file::before {
+  content: url(./icons/add-file.svg);
+}
+#add-folder::before {
+  content: url(./icons/add-folder.svg);
+}
+#refresh-explorer::before {
+  content: url(./icons/refreshExplorer.svg);
+}
+#collapse-folders::before {
+  content: url(./icons/collapseFolders.svg);
+}
 ul {
   cursor: pointer;
   padding-left: 0.6rem;
@@ -61,15 +74,22 @@ input {
   border-radius: 5px;
 }
 .file {
-  list-style-image: url("icons/file-earmark.svg");
+  list-style-image: url(./icons/file-earmark.svg);
 }
 
 .open-folder {
-  list-style-image: url("icons/open-folder.svg");
+  list-style-image: url(./icons/arrow-down.svg);
+}
+
+.open-folder::before {
+  content: url(./icons/open-folder.svg);
 }
 
 .folder {
-  list-style-image: url("icons/folder.svg");
+  list-style-image: url(./icons/arrow-right.svg);
+}
+.folder:not(:first-of-type)::before {
+  content: url(./icons/folder.svg);
 }
 
 #text-editor-container {
