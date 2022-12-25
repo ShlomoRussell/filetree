@@ -10,39 +10,9 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="styles.css" />
     <title><%=htmlWebpackPlugin.options.title%></title>
   </head>
   <body>
-    <p class="mx-auto" style="width: fit-content">
-      Right click on a file or folder to add or remove!
-    </p>
-    <div class="container" style="height: 90%">
-      <div class="row h-100 p-0">
-        <div
-          id="root-folder-container"
-          class="col-3 h-100"
-          style="max-width: 25%"
-        >
-          <div class="d-flex justify-content-end">
-            <button class="btn m-1 p-0" id="add-file">
-              <img src="icons/add-file.svg" alt="add file" data-id="add-file" />
-            </button>
-            <button class="btn m-1 p-0" id="add-folder">
-              <img
-                src="icons/add-folder.svg"
-                alt="add folder"
-                data-id="add-folder"
-              />
-            </button>
-          </div>
-          <ul id="root-folder">
-            <ul class="folder"></ul>
-          </ul>
-        </div>
-
-        <div class="col  mb-3" id="text-editor-container"></div>
-      </div>
-    </div>
+    <div id="root"></div>
   </body>
 </html>
