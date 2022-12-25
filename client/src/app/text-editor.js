@@ -1,7 +1,6 @@
 import { addFileContents, getFileContents } from "./fetch.js";
 import { clearElementsChildren } from "./util.js";
 
-const editorContainerElement = document.getElementById("text-editor-container");
 const textEditorElement = document.createElement("pre");
 textEditorElement.contentEditable = true;
 textEditorElement.className = "h-50";
@@ -29,6 +28,10 @@ editorHeaderElement.append(
  * @param {string} filePath
  */
 export async function insertFiletoEditor(filePath) {
+  const editorContainerElement = document.getElementById(
+    "text-editor-container"
+  );
+
   const filename = filePath.includes("/")
     ? filePath.split("/").slice(-1).join()
     : filePath;
@@ -84,7 +87,7 @@ async function openTerminal(filename, fileContents) {
     terminal.style.display = "block";
     terminal.className = "terminal h-50 w-100";
   }
-  editorContainerElement.append(terminal);
+  document.getElementById("text-editor-container").append(terminal);
 }
 
 function runTerminal() {

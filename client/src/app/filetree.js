@@ -8,12 +8,9 @@ import {
 } from "./fetch.js";
 import { insertFiletoEditor } from "./text-editor.js";
 import { clearElementsChildren } from "./util.js";
-import "../styles.css";
-import icons from "../icons";
 
 const body = document.querySelector("body");
-const filesContainerElement = document.getElementById("root-folder-container");
-const rootFolderElement = document.getElementById("root-folder");
+
 const contextMenuElement = document.createElement("div");
 contextMenuElement.id = "context-menu";
 
@@ -54,7 +51,7 @@ function createForm(id, type) {
   form[0].addEventListener("blur", (e) => form.remove());
 }
 
-filesContainerElement.addEventListener("contextmenu", function (e) {
+export function filesContainerRghtClickHandler(e) {
   e.preventDefault();
   const { clientX, clientY } = e;
   const id = e.target.id || e.target.dataset.id;
@@ -65,8 +62,7 @@ filesContainerElement.addEventListener("contextmenu", function (e) {
   if (className.includes("file")) {
     contextMenu(id, clientX, clientY, "file");
   }
-});
-
+}
 /**
  * Creats a context menu for right clicking on a file or folder
  * @param {string} entryId
@@ -121,13 +117,12 @@ function removeContextMenu() {
 }
 
 //hiding the custom context menus on somewhere else and inserting files to the editor
-body.addEventListener("click", handleBodyClick);
 
 /**
  *
  * @param {MouseEvent} e
  */
-function handleBodyClick(e) {
+export function handleBodyClick(e) {
   const id = e.target.id || e.target.dataset.id;
   if (id !== "context-menu" && contextMenuElement.childElementCount) {
     removeContextMenu();
@@ -232,7 +227,7 @@ function collapseFolder(id) {
   }
 }
 
-async function renderExistingDirectory() {
+export async function renderExistingDirectory() {
   try {
     const directories = await getDirectoryList().then((res) => res.json());
     recursiveDirectoryLoop(directories);
@@ -270,13 +265,16 @@ async function renderExistingDirectory() {
  * @param {string} datasetId
  */
 function toggleActiveEntry(datasetId) {
-  rootFolderElement.querySelectorAll("span").forEach((span) => {
-    if (span.dataset.id === datasetId) {
-      span.classList.add("active");
-    } else {
-      span.classList.remove("active");
-    }
-  });
+  document
+    .getElementById("root-folder")
+    .querySelectorAll("span")
+    .forEach((span) => {
+      if (span.dataset.id === datasetId) {
+        span.classList.add("active");
+      } else {
+        span.classList.remove("active");
+      }
+    });
 }
 
 /**
@@ -284,9 +282,14 @@ function toggleActiveEntry(datasetId) {
  * @param {"file" | "folder" } type
  */
 function findActiveFolder(type) {
-  const currentFolder = rootFolderElement.querySelector("span.active");
-  if (currentFolder && currentFolder.className.includes("folder")) {
-    createForm(currentFolder.dataset.id, type);
-  } else createForm("root-folder", type);
+  try {
+    const currentFolder = document
+      .getElementById("root-folder")
+      .querySelector("span.active");
+    if (currentFolder && currentFolder.className.includes("folder")) {
+      createForm(currentFolder.dataset.id, type);
+    } else createForm("root-folder", type);
+  } catch (error) {
+    console.log(error);
+  }
 }
-(() => renderExistingDirectory())();
