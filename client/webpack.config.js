@@ -1,15 +1,17 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require('webpack');
 
 module.exports = {
   mode: "development",
-  entry: path.resolve(__dirname, "./src/app/filetree.js"),
+  entry: path.resolve(__dirname, "./src/app/"),
   output: {
     path: path.resolve(__dirname, "build"),
-    assetModuleFilename: "[name][ext]",
+    assetModuleFilename: "icons/[name][ext]",
     clean: true,
   },
+  devtool: "source-map",
   devServer: {
     static: {
       directory: path.resolve(__dirname, "build"),
@@ -24,23 +26,9 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "[name].[ext]",
-          },
-        },
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
-      {
-        test: /\.(svg)$/i,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "[name].[ext]",
-            outputPath: "icons",
-          },
-        },
-      },
+      
     ],
   },
   plugins: [
@@ -50,5 +38,6 @@ module.exports = {
       template: "./src/index.html",
     }),
     new MiniCssExtractPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
 };
