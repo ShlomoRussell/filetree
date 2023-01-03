@@ -1,8 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const webpack = require('webpack');
+const webpack = require("webpack");
+const dotenv = require("dotenv");
 
+dotenv.config();
 module.exports = {
   mode: "development",
   entry: path.resolve(__dirname, "./src/app/"),
@@ -28,7 +30,6 @@ module.exports = {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
-      
     ],
   },
   plugins: [
@@ -38,6 +39,7 @@ module.exports = {
       template: "./src/index.html",
     }),
     new MiniCssExtractPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.EnvironmentPlugin(["baseUrl"]),
   ],
 };
