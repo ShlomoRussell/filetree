@@ -27,6 +27,6 @@ module.exports = {
       template: "./src/index.html",
     }),
     new MiniCssExtractPlugin(),
-    new webpack.EnvironmentPlugin(["ENV"]),
+    new webpack.EnvironmentPlugin(["BASE_URL"]),
   ],
 };
