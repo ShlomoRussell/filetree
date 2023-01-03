@@ -40,6 +40,6 @@ module.exports = {
     }),
     new MiniCssExtractPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.EnvironmentPlugin(["baseUrl"]),
+    new webpack.EnvironmentPlugin(["BASE_URL"]),
   ],
 };

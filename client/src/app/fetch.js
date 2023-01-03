@@ -1,4 +1,4 @@
-const baseUrl = process != undefined ? process.env.baseUrl : "/";
+const baseUrl = process.env.ENV ? process.env.BASE_URL : "/";
 
 /**
  *
