@@ -7,7 +7,7 @@ const baseUrl = process.env.baseUrl || "/";
  */
 
 export function addFolderToServer(folderPath) {
-  return fetch("http://localhost:3001/folder/", {
+  return fetch(`${baseUrl}/folder/`, {
     method: "POST",
     body: JSON.stringify({ folderPath }),
     headers: {
