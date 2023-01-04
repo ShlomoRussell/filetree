@@ -2,9 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
-const dotenv = require("dotenv");
-
-dotenv.config();
+require("dotenv").config();
 module.exports = {
   mode: "development",
   entry: path.resolve(__dirname, "./src/app/"),
